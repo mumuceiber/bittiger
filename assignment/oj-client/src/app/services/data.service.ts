@@ -25,16 +25,16 @@ export class DataService {
   }
 
   getProblem(id: number): Promise<Problem> {
-    return this.httpClient.get(`{api/v1/problems/$(id)}`)
+    return this.httpClient.get(`api/v1/problems/${id}`)
       .toPromise()
       .then((res: any) => res)
       .catch(this.handelError);
   }
 
   addProblem(problem: Problem): Promise<Problem> {
-    const options = {headers: new HttpHeader({'Content-Type': 'application/json'})};
+    const options = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
-    return this.httpClient.post('api/v1/problems')
+    return this.httpClient.post('api/v1/problems', problem, options)
       .toPromise()
       .then((res: any) => {
         this.getProblems();

@@ -20,5 +20,4 @@ export class ProblemDetailComponent implements OnInit {
         .then(problem => this.problem = problem);
     });
   }
-
 }

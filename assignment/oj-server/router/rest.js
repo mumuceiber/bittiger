@@ -14,6 +14,7 @@ router.get('/problems', (req, res) => {
 // get /api/v1/problems/:id
 router.get('/problems/:id', (req, res) => {
   const id = req.params.id;
+  console.log('server side get problem:id' + id);
   ProblemService.getProblem(+id)
     .then( problem => res.json(problem));
 });
