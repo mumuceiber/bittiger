@@ -1,0 +1,44 @@
+<section>
+  <header class="editor-header">
+    <div class="row">
+      <select class="form-control pull-left lang-select" name="language"
+      [(ngModel)]="language" (change)="setLanguage(language)">
+        <option *ngFor="let language of languages" [value]="language">
+          {{language}}
+        </option>
+      </select>
+      <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
+        Reset
+    </button>
+    </div>
+  </header>
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Are you sure</h4>
+          </div>
+          <div class="modal-body">
+            <p>You will lose current code in the editor, are you sure?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="resetEditor()">Reset</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="row">
+        <div id="editor"></div>
+    </div>
+
+  <footer class="editor-footer">
+    <button type="button" class="btn btn-primary pull-right" (click)="submit()">Submit Solution</button>
+  </footer>
+
+</section>
