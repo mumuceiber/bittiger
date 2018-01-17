@@ -218,7 +218,7 @@ var AuthService = (function () {
             else if (err) {
                 _this.router.navigate(['/']);
                 console.log(err);
-                alert("Error: " + err.error + ". Check the console for further details.");
+                // alert(`Error: ${err.error}. Check the console for further details.`);
             }
         });
     };
@@ -277,7 +277,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "@media screen {\n  #editor {\n    height: 600px;\n  }\n  .lang-select{\n    width: 100px;\n    margin-left: 20px;\n  }\n  header .btn{\n    margin: 0 5px;\n  }\n  .editor-footer, .editor-header{\n    margin: 10px 0;\n  }\n  .cursor{\n    background: rgba(0, 250, 0, 0.5);\n    z-index: 40;\n    width: 2px !important;\n  }\n}\n", ""]);
+exports.push([module.i, "@media screen {\n  #editor {\n    width: 500px;\n    height: 600px;\n  }\n  .lang-select{\n    width: 150px;\n    margin-left: 20px;\n  }\n  header .btn{\n    margin: 0 5px;\n  }\n  .editor-footer, .editor-header{\n    margin: 10px 0;\n  }\n  .cursor{\n    background: rgba(0, 250, 0, 0.5);\n    z-index: 40;\n    width: 2px !important;\n  }\n  .panel-heading{\n    font-size: 20px;\n    font-weight: bold;\n  }\n}\n", ""]);
 
 // exports
 
@@ -290,7 +290,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/editor/editor.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section>\n  <header class=\"editor-header\">\n    <div class=\"row\">\n      <select class=\"form-control pull-left lang-select\" name=\"language\"\n      [(ngModel)]=\"language\" (change)=\"setLanguage(language)\">\n        <option *ngFor=\"let language of languages\" [value]=\"language\">\n          {{language}}\n        </option>\n      </select>\n      <!-- Button trigger modal -->\n    <button type=\"button\" class=\"btn btn-primary pull-right\" data-toggle=\"modal\" data-target=\"#myModal\">\n        Reset\n    </button>\n    </div>\n  </header>\n\n\n    <div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\">\n      <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n            <h4 class=\"modal-title\">Are you sure</h4>\n          </div>\n          <div class=\"modal-body\">\n            <p>You will lose current code in the editor, are you sure?</p>\n          </div>\n          <div class=\"modal-footer\">\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n            <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" (click)=\"resetEditor()\">Reset</button>\n          </div>\n        </div><!-- /.modal-content -->\n      </div><!-- /.modal-dialog -->\n    </div><!-- /.modal -->\n\n    <div class=\"row\">\n        <div id=\"editor\"></div>\n    </div>\n\n  <footer class=\"editor-footer\">\n    <button type=\"button\" class=\"btn btn-primary pull-right\" (click)=\"submit()\">Submit Solution</button>\n  </footer>\n\n</section>\n"
+module.exports = "<section>\n  <header class=\"editor-header\">\n    <div class=\"row\">\n      <select class=\"form-control pull-left lang-select\" name=\"language\"\n      [(ngModel)]=\"language\" (change)=\"setLanguage(language)\">\n        <option *ngFor=\"let language of languages\" [value]=\"language\">\n          {{language}}\n        </option>\n      </select>\n      <!-- Button trigger modal -->\n    <button type=\"button\" class=\"btn btn-primary pull-right\" data-toggle=\"modal\" data-target=\"#myModal\">\n        Reset\n    </button>\n    </div>\n  </header>\n\n\n    <div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\">\n      <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n            <h4 class=\"modal-title\">Are you sure</h4>\n          </div>\n          <div class=\"modal-body\">\n            <p>You will lose current code in the editor, are you sure?</p>\n          </div>\n          <div class=\"modal-footer\">\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n            <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" (click)=\"resetEditor()\">Reset</button>\n          </div>\n        </div><!-- /.modal-content -->\n      </div><!-- /.modal-dialog -->\n    </div><!-- /.modal -->\n\n    <div class=\"row\">\n        <div id=\"editor\"></div>\n    </div>\n\n  <footer class=\"editor-footer\">\n    <button type=\"button\" class=\"btn btn-primary pull-right\" (click)=\"submit()\">Submit Solution</button>\n  </footer>\n</section>\n\n<br/>\n<br/>\n<br/>\n\n<div *ngIf=\"output\">\n  <div class=\"row\">\n    <div class=\"panel panel-default\">\n      <div class=\"panel-heading\">Submission Result</div>\n      <div class=\"panel-body\">\n        {{output}}\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -311,11 +311,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("../../../core/esm5/core.js");
 var collaboration_service_1 = __webpack_require__("../../../../../src/app/services/collaboration.service.ts");
+var data_service_1 = __webpack_require__("../../../../../src/app/services/data.service.ts");
 var router_1 = __webpack_require__("../../../router/esm5/router.js");
 var EditorComponent = (function () {
-    function EditorComponent(collaborationService, route) {
+    function EditorComponent(collaborationService, route, dataService) {
         this.collaborationService = collaborationService;
         this.route = route;
+        this.dataService = dataService;
         this.languages = ['Java', 'Python'];
         this.language = 'Java';
         this.defaultContent = {
@@ -356,8 +358,17 @@ var EditorComponent = (function () {
         this.editor.setValue(this.defaultContent[this.language]);
     };
     EditorComponent.prototype.submit = function () {
-        var userCode = this.editor.getValue();
-        console.log(userCode);
+        var _this = this;
+        var userCodes = this.editor.getValue();
+        var data = {
+            'userCodes': userCodes,
+            'lang': this.language.toLowerCase()
+        };
+        this.dataService.buildAndRun(data)
+            .then(function (res) {
+            _this.output = res.text;
+            console.log(_this.output);
+        });
     };
     EditorComponent = __decorate([
         core_1.Component({
@@ -365,7 +376,9 @@ var EditorComponent = (function () {
             template: __webpack_require__("../../../../../src/app/components/editor/editor.component.html"),
             styles: [__webpack_require__("../../../../../src/app/components/editor/editor.component.css")]
         }),
-        __metadata("design:paramtypes", [collaboration_service_1.CollaborationService, router_1.ActivatedRoute])
+        __metadata("design:paramtypes", [collaboration_service_1.CollaborationService,
+            router_1.ActivatedRoute,
+            data_service_1.DataService])
     ], EditorComponent);
     return EditorComponent;
 }());
@@ -757,6 +770,16 @@ var DataService = (function () {
             .toPromise()
             .then(function (res) {
             _this.getProblems();
+            return res;
+        })
+            .catch(this.handelError);
+    };
+    DataService.prototype.buildAndRun = function (data) {
+        var options = { headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' }) };
+        return this.httpClient.post('api/v1/build_and_run_results', data, options)
+            .toPromise()
+            .then(function (res) {
+            console.log(data);
             return res;
         })
             .catch(this.handelError);

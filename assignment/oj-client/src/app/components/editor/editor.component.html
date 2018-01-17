@@ -40,5 +40,19 @@
   <footer class="editor-footer">
     <button type="button" class="btn btn-primary pull-right" (click)="submit()">Submit Solution</button>
   </footer>
-
 </section>
+
+<br/>
+<br/>
+<br/>
+
+<div *ngIf="output">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">Submission Result</div>
+      <div class="panel-body">
+        {{output}}
+      </div>
+    </div>
+  </div>
+</div>

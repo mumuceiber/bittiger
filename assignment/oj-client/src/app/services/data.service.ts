@@ -43,6 +43,18 @@ export class DataService {
       .catch(this.handelError);
   }
 
+  buildAndRun(data: any): Promise<any> {
+    const options = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
+
+    return this.httpClient.post('api/v1/build_and_run_results', data, options)
+      .toPromise()
+      .then((res: any) => {
+        console.log(data);
+        return res;
+      })
+      .catch(this.handelError);
+  }
+
   private handelError(error: any): Promise<any>{
     return Promise.reject(error.body || error );
   }
