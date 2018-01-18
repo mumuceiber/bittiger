@@ -17,13 +17,13 @@ def hello():
 @app.route('/build_and_run_results', methods=['POST'])
 def build_and_run_results():
     data = request.get_json()
-    print data
-    print 'hahah'
+    # print data
+    # print 'hahah'
     if 'code' not in data or 'lang' not in data:
         return 'You should provide codes and lang'
     code = data['code']
     lang = data['lang']
-    print "API get called with code: %s in %s" %(code, lang)
+    # print "API get called with code: %s in %s" %(code, lang)
     result = eu.build_and_run_results(code, lang)
     return jsonify(result)
 

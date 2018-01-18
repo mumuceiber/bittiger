@@ -17,11 +17,11 @@ CONTAINER_NAME = "%s:latest" % IMAGE_NAME
 
 SOURCE_FILE_NAMES = {
     "java": "Solution.java",
-    "python": "example.py"
+    "python": "solution.py"
 }
 BINARY_NAMES = {
     "java": "Solution",
-    "python": "example.py"
+    "python": "solution.py"
 }
 BUILD_COMMANDS = {
     "java": "javac",
