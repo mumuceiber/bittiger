@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 
 import './SignUpForm.css';
 
@@ -12,7 +13,7 @@ const SignUpForm = ({
   <div className='container'>
     <div className='card-panel signup-panel'>
     <form className="col s12" action="/" onSubmit={onSubmit}>
-      <h4 className="center-align">Login</h4>
+      <h4 className="center-align">Sign up</h4>
       {errors.summary && <div className="row"><p className="error-message">{errors.summary}</p></div>}
       <div className="row">
         <div className="input-field col s12">
@@ -35,10 +36,10 @@ const SignUpForm = ({
         </div>
       </div>
       <div className="row right-align">
-        <input type="submit" className="waves-effect waves-light btn indigo lighten-1" value="Log in" />
+        <input type="submit" className="waves-effect waves-light btn indigo lighten-1" value="Sign up" />
       </div>
       <div className="row">
-        <p className="right-align"> New to Tap News? <a href="/signup">Sign Up</a></p>
+        <p className="right-align"> New to Tap News? <Link to="/signup">Sign Up</Link></p>
       </div>
       </form>
     </div>

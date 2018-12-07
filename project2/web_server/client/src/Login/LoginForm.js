@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 
 import './LoginForm.css';
 
@@ -32,12 +33,13 @@ const LoginForm = ({
         <input type="submit" className="waves-effect waves-light btn indigo lighten-1" value="Log in" />
       </div>
       <div className="row">
-        <p className="right-align"> New to Tap News? <a href="/signup">Sign Up</a></p>
+        <p className="right-align"> New to Tap News? <Link to="/signup">Log in</Link></p>
       </div>
       </form>
     </div>
   </div>
 )
+
 
 //规定当有人调用loginform的时候，必须提供一下四个参数，少一个都不行
 //在compile时，做静态检查的时候就能帮我们检查调用loginform的地方是不是把这四个参数都提供了

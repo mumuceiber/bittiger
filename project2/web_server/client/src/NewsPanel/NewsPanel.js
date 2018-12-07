@@ -2,11 +2,12 @@ import React from 'react'
 import './NewsPanel.css';
 import NewsCard from '../NewsCard/NewsCard';
 import _ from 'lodash';
+import Auth from '../Auth/Auth';
 
 class NewsPanel extends React.Component {
   constructor() {
     super();
-    this.state = { news:null }; // news:list of jason
+    this.state = { news:null, pageNum: 1, loadAllNews: false}; // news:list of jason
   }
 
   handleScroll() {
@@ -29,14 +30,33 @@ class NewsPanel extends React.Component {
   }
 
   loadMoreNews(){
-    const news_url = 'http://' + window.location.hostname + ':3000' + '/news';
-    const request = new Request(news_url,{method:'GET',cache:false});
+    console.log(this.state.loadAllNews)
+    if (this.state.loadAllNews === true) {
+      return;
+    }
+
+    const news_url = 'http://' + window.location.hostname + ':3000/' +
+    'news/userId/' + Auth.getEmail() + '/pageNum/' + this.state.pageNum;
+
+    const request = new Request(
+      news_url,
+      {
+        method:'GET',
+        headers: {
+          'Authorization': 'bearer ' + Auth.getToken()
+        }
+      });
 
     fetch(request)
       .then(res=>res.json())
       .then(news=>{
+        if (!news || news.length == 0) {
+          this.setState({loadAllNews: true});
+        }
+
         this.setState({
             news : this.state.news ? this.state.news.concat(news) : news,
+            pageNum : this.state.pageNum + 1,
         });
       });
   }

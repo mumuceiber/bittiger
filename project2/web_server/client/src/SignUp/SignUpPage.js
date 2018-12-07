@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SignUpForm from './SignUpForm';
 
 class SignUpPage extends React.Component {
-  constructor(props){
-    super(props);
+  constructor(props, context){
+    super(props, context);
 
     this.state = {
       errors: {},
@@ -25,7 +26,42 @@ class SignUpPage extends React.Component {
     console.log('password: ' + password);
     console.log('confirm psd: ' + confirm_password);
 
-    //TODO : post sign up data
+    //post sign up data
+    const url = 'http://' + window.location.hostname + ':3000' + '/auth/signup';
+
+    const request = new Request(
+      url,
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: this.state.user.email,
+          password: this.state.user.password,
+        }),
+      });
+
+      fetch(request).then(response => {
+        if (response.status === 200) {
+          this.setState({
+            errors: {}
+          });
+
+          response.json().then(json => {
+            console.log(json);
+            this.context.router.replace('/login');
+          });
+        } else {
+          response.json().then(json => {
+            console.log('signup failed!');
+            const errors = json.errors;
+            errors.summary = json.message;
+            this.setState({errors});
+          })
+        }
+      });
   }
 
   changeUser(event) {
@@ -56,5 +92,9 @@ class SignUpPage extends React.Component {
     )
   }
 }
+
+SignUpPage.contextTypes = {
+  router: PropTypes.object.isRequired
+};
 
 export default SignUpPage;

@@ -1,0 +1,14 @@
+jsonrpclib
+pymongo
+pika
+requests
+redis
+hashlib
+newspaper
+numpy
+scipy
+scikit-learn
+sklearn
+tensorflow
+pandas
+watchdog
